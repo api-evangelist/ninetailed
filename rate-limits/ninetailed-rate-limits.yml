@@ -1,0 +1,60 @@
+name: Ninetailed Rate Limits
+description: >-
+  Rate limits for the Ninetailed Experience API. The API is deployed on the
+  edge via Cloudflare Workers and is designed for high-throughput personalization
+  workloads. Known limits apply primarily to batch event endpoints. Individual
+  profile endpoints do not publish explicit request-per-second limits in the
+  public documentation.
+url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+created: '2026-06-13'
+modified: '2026-06-13'
+
+limits:
+  - name: Batch Events per Request
+    description: >-
+      The /events (synchronous) and /import/events (asynchronous) batch
+      endpoints accept a maximum of 200 events per request.
+    scope: Request
+    maximum: 200
+    unit: events
+    endpoint: /v2/organizations/{organizationId}/environments/{environmentSlug}/events
+    documented: true
+
+  - name: Identify Events per Batch Request
+    description: >-
+      Within a single batch request, no more than 50 identify events may be
+      included.
+    scope: Request
+    maximum: 50
+    unit: identify events
+    endpoint: /v2/organizations/{organizationId}/environments/{environmentSlug}/events
+    documented: true
+
+  - name: Unique Profiles per Batch Request
+    description: >-
+      A single batch request may reference a maximum of 50 unique profiles.
+    scope: Request
+    maximum: 50
+    unit: unique profiles
+    endpoint: /v2/organizations/{organizationId}/environments/{environmentSlug}/events
+    documented: true
+
+  - name: Concurrent Request Overload
+    description: >-
+      When too many concurrent requests are received, the API returns HTTP 429
+      with error code ERR_PROFILE_OVERLOAD. The resolution is to reduce event
+      frequency or implement client-side throttling.
+    scope: Concurrent
+    errorCode: ERR_PROFILE_OVERLOAD
+    httpStatus: 429
+    documented: true
+    recommendation: Reduce event frequency; implement exponential backoff on 429 responses
+
+notes: >-
+  The Experience API is deployed on Cloudflare Workers at the edge for
+  low-latency global performance. No explicit requests-per-second or
+  requests-per-day limits are published in the public documentation beyond
+  the batch constraints and the concurrent overload protection above.
+  Customers on higher-tier plans may have different effective limits based
+  on their contracted usage. Contact Contentful support for plan-specific
+  limit details.

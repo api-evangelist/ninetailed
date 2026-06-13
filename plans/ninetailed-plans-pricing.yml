@@ -1,0 +1,69 @@
+name: Ninetailed Plans and Pricing
+description: >-
+  Ninetailed (now Contentful Personalization) is available as an add-on to
+  Contentful plans. Pricing is quote-based and determined by organizational
+  needs. The platform requires a paid license installed via the Contentful
+  Apps Marketplace. Three tiers are referenced in third-party sources: Start,
+  Core, and Scale.
+url: https://www.contentful.com/pricing/
+created: '2026-06-13'
+modified: '2026-06-13'
+
+plans:
+  - name: Start
+    description: >-
+      Entry-level personalization tier for teams beginning with personalization
+      and experimentation. Enables basic audience segmentation and experience
+      delivery.
+    url: https://www.contentful.com/pricing/
+    contact: https://www.contentful.com/contact/
+    type: Paid
+    pricing: Quote-based — contact sales for pricing
+    features:
+      - Audience segmentation
+      - Experience delivery
+      - A/B testing
+      - Experience API access
+      - JavaScript and React SDKs
+
+  - name: Core
+    description: >-
+      Mid-tier plan for growing teams requiring deeper personalization
+      capabilities, insights, and additional data connections.
+    url: https://www.contentful.com/pricing/
+    contact: https://www.contentful.com/contact/
+    type: Paid
+    pricing: Quote-based — contact sales for pricing
+    features:
+      - All Start features
+      - Insights dashboard
+      - Content performance analytics
+      - CDP and CRM integrations
+      - Node.js SDK
+      - Google Tag Manager plugin
+      - Segment integration
+
+  - name: Scale
+    description: >-
+      Enterprise-grade plan for organizations running large-scale
+      personalization across multiple brands, regions, and channels.
+    url: https://www.contentful.com/pricing/
+    contact: https://www.contentful.com/contact/
+    type: Paid
+    pricing: Quote-based — contact sales for pricing
+    features:
+      - All Core features
+      - Multi-brand and multi-region support
+      - AI-powered audience suggestions
+      - Edge and server-side rendering (ESR/SSR)
+      - React Native SDK
+      - Advanced experimentation
+      - Priority support
+
+notes: >-
+  Ninetailed does not publish a public pricing page with fixed prices.
+  All tiers require contacting the Contentful sales team for a custom quote.
+  A free plan is not offered. Access requires purchasing a Contentful
+  Personalization license through the Contentful Apps Marketplace.
+  Ninetailed was acquired by Contentful in 2023; Contentful itself announced
+  a definitive agreement to be acquired by Salesforce in January 2025.

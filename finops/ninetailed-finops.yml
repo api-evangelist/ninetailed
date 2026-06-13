@@ -1,0 +1,94 @@
+name: Ninetailed FinOps
+description: >-
+  Financial operations guidance for teams using the Ninetailed (Contentful
+  Personalization) platform. Ninetailed uses quote-based enterprise pricing
+  bundled with Contentful plans. Cost management focuses on audience complexity,
+  active experience volume, and SDK event throughput.
+url: https://www.contentful.com/pricing/
+created: '2026-06-13'
+modified: '2026-06-13'
+
+model:
+  type: Quote-based enterprise subscription
+  billingCycle: Annual (typically)
+  trialAvailable: false
+  freeTierAvailable: false
+  selfServeAvailable: false
+  requiresSalesContact: true
+  bundledWith: Contentful CMS subscription (Apps Marketplace add-on)
+
+costDrivers:
+  - name: Plan Tier
+    description: >-
+      The selected plan tier (Start, Core, Scale) is the primary cost driver.
+      Higher tiers unlock more audiences, experiences, integrations, and
+      analytics capabilities.
+    impact: High
+
+  - name: Number of Active Audiences
+    description: >-
+      The number of audience segments actively defined and evaluated against
+      visitor profiles may affect tier eligibility and contract pricing.
+    impact: Medium
+
+  - name: Number of Active Experiences
+    description: >-
+      A/B tests and personalized experience variants contribute to platform
+      usage and may be capped or metered at lower tiers.
+    impact: Medium
+
+  - name: Data Connections and Integrations
+    description: >-
+      CDP, CRM, and third-party integrations (Segment, Contentsquare, GTM)
+      are available at higher tiers. Integration licensing may add cost.
+    impact: Medium
+
+  - name: API Event Volume
+    description: >-
+      High-volume applications sending large numbers of profile and tracking
+      events to the Experience API may face throughput constraints at lower
+      tiers or require enterprise-level agreements for guaranteed SLA.
+    impact: Low to Medium (depends on scale)
+
+  - name: Environment Count
+    description: >-
+      The platform supports main and development environments. Additional
+      environment access may factor into contract scope.
+    impact: Low
+
+optimization:
+  - strategy: Right-size audience count
+    description: >-
+      Consolidate overlapping audience definitions to reduce complexity and
+      stay within tier limits. Retire unused audiences regularly.
+
+  - strategy: Monitor event throughput
+    description: >-
+      Implement client-side throttling and batching (up to 200 events per
+      request) to reduce API call volume and avoid 429 overload errors.
+
+  - strategy: Use preflight mode for SSR
+    description: >-
+      Use the ?type=preflight query parameter for server-side and edge-side
+      rendering to evaluate experiences without persisting state, reducing
+      write operations against the Experience API.
+
+  - strategy: Evaluate integration necessity
+    description: >-
+      Only enable paid third-party integrations (CDPs, CRMs) that are actively
+      driving measurable personalization outcomes. Unused integrations increase
+      contract scope without benefit.
+
+  - strategy: Negotiate annual contracts
+    description: >-
+      As a quote-based platform, annual commitments typically yield better
+      per-unit pricing than month-to-month arrangements. Engage Contentful
+      sales during renewal windows.
+
+references:
+  - name: Contentful Pricing
+    url: https://www.contentful.com/pricing/
+  - name: Contentful Apps Marketplace - Personalization
+    url: https://www.contentful.com/marketplace/
+  - name: Ninetailed Experience API Documentation
+    url: https://www.contentful.com/developers/docs/ninetailed/experience-api/

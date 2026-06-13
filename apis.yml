@@ -1,0 +1,81 @@
+aid: ninetailed
+name: Ninetailed
+description: >-
+  Ninetailed (now Contentful Personalization) is an API-first personalization
+  and experimentation platform for content-rich applications. It provides a
+  REST-based Experience API for managing visitor profiles, defining audience
+  segments, running A/B tests, and delivering personalized experiences at the
+  edge. SDKs are available for JavaScript, React, Next.js, Node.js, and React
+  Native.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/ninetailed/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Personalization
+  - Experimentation
+  - A/B Testing
+  - Audience Segmentation
+  - Feature Flags
+  - Headless CMS
+  - Edge Computing
+  - Content Management
+
+apis:
+  - name: Ninetailed Experience API
+    description: >-
+      The core REST API for the Ninetailed personalization platform. Returns
+      visitor profiles and resolves which experience and variant to render based
+      on audience rules. Deployed on the edge for high performance. Supports
+      profile creation, updates, retrieval, deletion, event tracking, and batch
+      event import for audience segmentation and A/B test delivery.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+    baseURL: https://experience.ninetailed.co/v2
+    tags:
+      - Profiles
+      - Events
+      - Personalization
+      - A/B Testing
+      - Audience Segmentation
+    properties:
+      - type: Documentation
+        url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+      - type: OpenAPI
+        url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+    contact:
+      - FN: Ninetailed Support
+        url: https://www.contentful.com/help/
+
+common:
+  - type: Website
+    url: https://www.contentful.com/products/personalization/
+  - type: Documentation
+    url: https://www.contentful.com/developers/docs/ninetailed/
+  - type: GitHubOrg
+    url: https://github.com/ninetailed-inc
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/ninetailed
+  - type: Blog
+    url: https://medium.com/@Ninetailed
+  - type: Pricing
+    url: https://www.contentful.com/pricing/
+  - type: StatusPage
+    url: https://ninetailedstatus.com/
+  - type: X
+    url: https://x.com/ninetailedhq
+  - type: Changelog
+    url: https://www.contentful.com/developers/docs/ninetailed/ninetailed-changelog/
+  - type: Plans
+    url: plans/ninetailed-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/ninetailed-rate-limits.yml
+  - type: FinOps
+    url: finops/ninetailed-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
