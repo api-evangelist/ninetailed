@@ -1,0 +1,82 @@
+{
+  "summary": "Create a new visitor profile with a page event",
+  "description": "Creates a new visitor profile by sending an initial page view event. Returns the resolved profile with any matching experiences and variant assignments.",
+  "request": {
+    "method": "POST",
+    "path": "/profiles",
+    "queryParameters": {
+      "locale": "en"
+    },
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "body": {
+      "events": [
+        {
+          "type": "page",
+          "name": "Home",
+          "anonymousId": "anon-9f8a2c1e-4b3d-4f5a-8e1b-2d3c4f5a6b7c",
+          "properties": {
+            "url": "https://example.com/",
+            "path": "/",
+            "title": "Home Page",
+            "referrer": "https://google.com"
+          },
+          "timestamp": "2026-06-13T10:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "profile": {
+          "id": "prof-7a4b2c1e-8d3f-4e5a-9b1c-3d4e5f6a7b8c",
+          "stableId": "stable-9f8a2c1e-4b3d-4f5a-8e1b-2d3c4f5a6b7c",
+          "random": 0.4237,
+          "audiences": ["audience-new-visitors"],
+          "traits": {},
+          "location": {
+            "city": "San Francisco",
+            "region": "CA",
+            "country": "US",
+            "timezone": "America/Los_Angeles"
+          },
+          "session": {
+            "id": "sess-1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+            "isReturningVisitor": false,
+            "landingPage": "https://example.com/",
+            "count": 1,
+            "sessionLength": 0
+          },
+          "jurisdiction": "CCPA",
+          "stickyVariants": {}
+        },
+        "experiences": [
+          {
+            "experienceId": "exp-hero-banner-test",
+            "variantIndex": 1,
+            "variants": {
+              "hero-banner": "entry-variant-b-id"
+            },
+            "sticky": false
+          }
+        ],
+        "changes": [
+          {
+            "key": "hero-banner",
+            "type": "Variable",
+            "value": "entry-variant-b-id",
+            "meta": {
+              "experienceId": "exp-hero-banner-test",
+              "variantIndex": 1
+            }
+          }
+        ]
+      },
+      "error": null,
+      "message": "ok"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ninetailed/main/json-schema/ninetailed-profile.json",
+  "title": "NinetailedProfile",
+  "description": "A Ninetailed visitor profile containing identity, behavioral, session, and location data used for personalization and A/B test variant assignment.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the visitor profile."
+    },
+    "stableId": {
+      "type": "string",
+      "description": "Stable cross-session identifier for the visitor, persisted via cookie."
+    },
+    "random": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Random float (0-1) used for deterministic traffic splitting in A/B tests."
+    },
+    "audiences": {
+      "type": "array",
+      "description": "List of audience IDs the visitor currently qualifies for.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "traits": {
+      "type": "object",
+      "description": "Merged identify traits from all identify events for this visitor.",
+      "additionalProperties": true
+    },
+    "location": {
+      "$ref": "#/definitions/Location"
+    },
+    "session": {
+      "$ref": "#/definitions/Session"
+    },
+    "jurisdiction": {
+      "type": "string",
+      "description": "Regulatory jurisdiction code (e.g. GDPR, CCPA) resolved from visitor location."
+    },
+    "stickyVariants": {
+      "type": "object",
+      "description": "Map of experience ID to variant index for sticky (consistent) variant assignment.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "Location": {
+      "type": "object",
+      "description": "Geographic location resolved from the visitor's IP address.",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "description": "Latitude coordinate."
+        },
+        "lon": {
+          "type": "number",
+          "description": "Longitude coordinate."
+        },
+        "city": {
+          "type": "string",
+          "description": "City name."
+        },
+        "region": {
+          "type": "string",
+          "description": "Region or state code."
+        },
+        "country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "IANA timezone identifier (e.g. America/New_York)."
+        }
+      }
+    },
+    "Session": {
+      "type": "object",
+      "description": "Session-level metadata for the visitor.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique session identifier."
+        },
+        "isReturningVisitor": {
+          "type": "boolean",
+          "description": "True if the visitor has been seen in a previous session."
+        },
+        "landingPage": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the first page visited in this session."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total number of sessions this visitor has had."
+        },
+        "sessionLength": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Length of the current session in seconds."
+        }
+      }
+    }
+  }
+}

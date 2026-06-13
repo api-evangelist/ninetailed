@@ -1,0 +1,129 @@
+vocabulary:
+  provider: ninetailed
+  version: '1.0'
+  description: >-
+    Domain vocabulary for the Ninetailed (Contentful Personalization) platform,
+    covering personalization, experimentation, audience segmentation, and
+    edge-delivered profile resolution.
+  terms:
+    - term: profile
+      definition: >-
+        A visitor profile is the central data object in Ninetailed representing
+        a single visitor. It stores identity traits, behavioral history, session
+        metadata, geographic location, audience memberships, and sticky variant
+        assignments. Profiles are created on the first interaction and enriched
+        with each subsequent event.
+      aliases:
+        - visitor profile
+        - user profile
+    - term: stableId
+      definition: >-
+        A cross-session stable identifier for a visitor, typically persisted via
+        a first-party cookie. Allows Ninetailed to recognize returning visitors
+        across sessions even when session IDs change.
+    - term: experience
+      definition: >-
+        A personalization or A/B test configuration in Ninetailed that defines
+        audience targeting rules, traffic splits, and variant mappings. When a
+        profile request is processed, the platform resolves which experiences
+        apply and which variants to assign.
+      aliases:
+        - experiment
+        - personalization rule
+    - term: variant
+      definition: >-
+        One of the content alternatives in an experience. Variant index 0 is
+        the control (default content); indices 1 and above are test variants.
+        The assigned variant determines which content entry is rendered for the
+        visitor.
+      aliases:
+        - variant index
+        - content variant
+    - term: audience
+      definition: >-
+        A named segment of visitors defined by trait-based, behavioral, or
+        location-based conditions. Profiles are evaluated against all defined
+        audiences on each request, and the resulting audience membership list
+        drives experience targeting.
+      aliases:
+        - segment
+        - audience segment
+    - term: change
+      definition: >-
+        A resolved content substitution instruction returned by the Experience
+        API alongside a profile. Each change specifies a component key, the
+        type of change (Variable), and the variant entry ID to render instead
+        of the default content.
+    - term: event
+      definition: >-
+        A behavioral or identity signal sent to the Experience API. Events are
+        the primary mechanism for building and enriching visitor profiles. Five
+        event types are supported: page, track, identify, screen, and component.
+    - term: page event
+      definition: >-
+        An event type capturing a visitor's page view. Carries page URL, path,
+        title, and referrer as properties. Used to build behavioral audience
+        segments based on page visits.
+    - term: track event
+      definition: >-
+        A custom behavioral event capturing a named action taken by the visitor
+        (e.g., "Clicked CTA", "Added to Cart"). Carries arbitrary key-value
+        properties.
+    - term: identify event
+      definition: >-
+        An event type that associates a user ID and traits with a visitor
+        profile. Used to link anonymous visitor profiles to known users after
+        login or form submission, and to set segmentable traits like plan or
+        industry.
+    - term: screen event
+      definition: >-
+        A mobile-equivalent of the page event, used in React Native SDK
+        integrations to capture screen views in native mobile applications.
+    - term: component event
+      definition: >-
+        An event type that tracks which Ninetailed-managed components a visitor
+        has been exposed to, enabling impression-based audience building.
+    - term: stickyVariants
+      definition: >-
+        A map on the profile object that persists a visitor's variant
+        assignments across requests for experiences configured as sticky. Ensures
+        a visitor always sees the same variant of a given experience once
+        assigned.
+    - term: jurisdiction
+      definition: >-
+        A regulatory classification derived from the visitor's geographic
+        location. Used to determine applicable privacy regulations (e.g., GDPR
+        for EU visitors, CCPA for California visitors) and adjust
+        personalization behavior accordingly.
+    - term: preflight
+      definition: >-
+        An optional request mode (type=preflight query parameter) optimized for
+        edge pre-rendering. Returns experience and variant data with reduced
+        latency for use in edge middleware before the page is served to the
+        visitor.
+    - term: random
+      definition: >-
+        A stable float between 0 and 1 stored on the profile and used as the
+        basis for deterministic traffic splitting in A/B tests. Ensures a
+        visitor is consistently assigned to the same variant across requests.
+    - term: batch upsert
+      definition: >-
+        A bulk operation to ingest multiple events across multiple profiles in a
+        single API call. Available in both synchronous (POST /events) and
+        asynchronous fire-and-forget (POST /import/events) variants. Subject to
+        limits of 200 events, 50 identify events, and 50 unique profiles per
+        request.
+    - term: locale
+      definition: >-
+        A BCP 47 language tag query parameter that controls which locale variant
+        of localized experiences is resolved and returned. Defaults to "en".
+    - term: organizationId
+      definition: >-
+        The Client ID for a Ninetailed organization, found in the SDK Keys
+        section of the Optimization tab. Used as a path parameter in all
+        Experience API requests to scope requests to the correct organization.
+    - term: environmentSlug
+      definition: >-
+        A string identifier for the target Ninetailed environment (e.g., "main",
+        "staging"). Used as a path parameter to scope API requests to the
+        correct content and rule set.

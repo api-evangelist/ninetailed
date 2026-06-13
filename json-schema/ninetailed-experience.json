@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ninetailed/main/json-schema/ninetailed-experience.json",
+  "title": "NinetailedExperience",
+  "description": "A resolved Ninetailed experience with the variant assigned to the visitor, returned as part of a profile response.",
+  "type": "object",
+  "properties": {
+    "experienceId": {
+      "type": "string",
+      "description": "Unique identifier of the experience or experiment."
+    },
+    "variantIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero-based index of the assigned variant (0 = control, 1+ = variants)."
+    },
+    "variants": {
+      "type": "object",
+      "description": "Map of component keys to variant entry IDs for this experience assignment.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "sticky": {
+      "type": "boolean",
+      "description": "When true, the variant assignment is persisted for consistency across requests."
+    }
+  },
+  "definitions": {
+    "Change": {
+      "type": "object",
+      "description": "A content change instruction for a personalized experience.",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Identifier of the component or content slot to change."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Variable"],
+          "description": "Type of change. Currently only 'Variable' is supported."
+        },
+        "value": {
+          "type": "string",
+          "description": "The variant entry ID to render for this component."
+        },
+        "meta": {
+          "type": "object",
+          "description": "Metadata about the experience driving this change.",
+          "properties": {
+            "experienceId": {
+              "type": "string",
+              "description": "ID of the experience that produced this change."
+            },
+            "variantIndex": {
+              "type": "integer",
+              "description": "Variant index assigned for this experience."
+            }
+          }
+        }
+      }
+    }
+  }
+}

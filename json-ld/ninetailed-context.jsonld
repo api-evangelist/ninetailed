@@ -1,0 +1,185 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "nt": "https://ninetailed.io/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "NinetailedProfile": "nt:Profile",
+    "NinetailedEvent": "nt:Event",
+    "NinetailedExperience": "nt:Experience",
+    "NinetailedAudience": "nt:Audience",
+    "NinetailedChange": "nt:Change",
+
+    "id": "@id",
+    "type": "@type",
+
+    "profileId": {
+      "@id": "nt:profileId",
+      "@type": "xsd:string"
+    },
+    "stableId": {
+      "@id": "nt:stableId",
+      "@type": "xsd:string"
+    },
+    "random": {
+      "@id": "nt:random",
+      "@type": "xsd:decimal"
+    },
+    "audiences": {
+      "@id": "nt:audiences",
+      "@container": "@set"
+    },
+    "traits": {
+      "@id": "nt:traits",
+      "@type": "@json"
+    },
+    "stickyVariants": {
+      "@id": "nt:stickyVariants",
+      "@type": "@json"
+    },
+    "jurisdiction": {
+      "@id": "nt:jurisdiction",
+      "@type": "xsd:string"
+    },
+
+    "location": {
+      "@id": "nt:location",
+      "@type": "nt:Location"
+    },
+    "lat": {
+      "@id": "schema:latitude",
+      "@type": "xsd:decimal"
+    },
+    "lon": {
+      "@id": "schema:longitude",
+      "@type": "xsd:decimal"
+    },
+    "city": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "region": {
+      "@id": "schema:addressRegion",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "schema:addressCountry",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "nt:timezone",
+      "@type": "xsd:string"
+    },
+
+    "session": {
+      "@id": "nt:session",
+      "@type": "nt:Session"
+    },
+    "sessionId": {
+      "@id": "nt:sessionId",
+      "@type": "xsd:string"
+    },
+    "isReturningVisitor": {
+      "@id": "nt:isReturningVisitor",
+      "@type": "xsd:boolean"
+    },
+    "landingPage": {
+      "@id": "nt:landingPage",
+      "@type": "@id"
+    },
+    "sessionCount": {
+      "@id": "nt:sessionCount",
+      "@type": "xsd:integer"
+    },
+    "sessionLength": {
+      "@id": "nt:sessionLength",
+      "@type": "xsd:integer"
+    },
+
+    "eventType": {
+      "@id": "nt:eventType",
+      "@type": "xsd:string"
+    },
+    "userId": {
+      "@id": "nt:userId",
+      "@type": "xsd:string"
+    },
+    "anonymousId": {
+      "@id": "nt:anonymousId",
+      "@type": "xsd:string"
+    },
+    "eventName": {
+      "@id": "nt:eventName",
+      "@type": "xsd:string"
+    },
+    "properties": {
+      "@id": "nt:properties",
+      "@type": "@json"
+    },
+    "timestamp": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "experienceId": {
+      "@id": "nt:experienceId",
+      "@type": "xsd:string"
+    },
+    "variantIndex": {
+      "@id": "nt:variantIndex",
+      "@type": "xsd:integer"
+    },
+    "variants": {
+      "@id": "nt:variants",
+      "@type": "@json"
+    },
+    "sticky": {
+      "@id": "nt:sticky",
+      "@type": "xsd:boolean"
+    },
+
+    "changeKey": {
+      "@id": "nt:changeKey",
+      "@type": "xsd:string"
+    },
+    "changeType": {
+      "@id": "nt:changeType",
+      "@type": "xsd:string"
+    },
+    "changeValue": {
+      "@id": "nt:changeValue",
+      "@type": "xsd:string"
+    },
+
+    "organizationId": {
+      "@id": "nt:organizationId",
+      "@type": "xsd:string"
+    },
+    "environmentSlug": {
+      "@id": "nt:environmentSlug",
+      "@type": "xsd:string"
+    },
+    "locale": {
+      "@id": "schema:inLanguage",
+      "@type": "xsd:string"
+    },
+
+    "experiences": {
+      "@id": "nt:experiences",
+      "@container": "@set"
+    },
+    "changes": {
+      "@id": "nt:changes",
+      "@container": "@set"
+    },
+    "events": {
+      "@id": "nt:events",
+      "@container": "@list"
+    },
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url"
+  }
+}

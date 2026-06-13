@@ -1,0 +1,98 @@
+{
+  "summary": "Update a profile with an identify event",
+  "description": "Enriches an existing visitor profile with identity traits by sending an identify event. Useful for connecting anonymous sessions to known users after login or form submission.",
+  "request": {
+    "method": "POST",
+    "path": "/profiles/{profileId}",
+    "pathParameters": {
+      "profileId": "prof-7a4b2c1e-8d3f-4e5a-9b1c-3d4e5f6a7b8c"
+    },
+    "queryParameters": {
+      "locale": "en"
+    },
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "body": {
+      "events": [
+        {
+          "type": "identify",
+          "userId": "user-12345",
+          "anonymousId": "anon-9f8a2c1e-4b3d-4f5a-8e1b-2d3c4f5a6b7c",
+          "traits": {
+            "email": "jane@example.com",
+            "name": "Jane Doe",
+            "plan": "pro",
+            "company": "Acme Corp"
+          },
+          "timestamp": "2026-06-13T10:05:00.000Z"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": {
+        "profile": {
+          "id": "prof-7a4b2c1e-8d3f-4e5a-9b1c-3d4e5f6a7b8c",
+          "stableId": "stable-9f8a2c1e-4b3d-4f5a-8e1b-2d3c4f5a6b7c",
+          "random": 0.4237,
+          "audiences": ["audience-new-visitors", "audience-pro-plan"],
+          "traits": {
+            "email": "jane@example.com",
+            "name": "Jane Doe",
+            "plan": "pro",
+            "company": "Acme Corp"
+          },
+          "location": {
+            "city": "San Francisco",
+            "region": "CA",
+            "country": "US",
+            "timezone": "America/Los_Angeles"
+          },
+          "session": {
+            "id": "sess-1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+            "isReturningVisitor": false,
+            "landingPage": "https://example.com/",
+            "count": 1,
+            "sessionLength": 300
+          },
+          "jurisdiction": "CCPA",
+          "stickyVariants": {}
+        },
+        "experiences": [
+          {
+            "experienceId": "exp-hero-banner-test",
+            "variantIndex": 1,
+            "variants": {
+              "hero-banner": "entry-variant-b-id"
+            },
+            "sticky": false
+          },
+          {
+            "experienceId": "exp-pro-plan-upsell",
+            "variantIndex": 0,
+            "variants": {
+              "cta-banner": "entry-control-id"
+            },
+            "sticky": false
+          }
+        ],
+        "changes": [
+          {
+            "key": "hero-banner",
+            "type": "Variable",
+            "value": "entry-variant-b-id",
+            "meta": {
+              "experienceId": "exp-hero-banner-test",
+              "variantIndex": 1
+            }
+          }
+        ]
+      },
+      "error": null,
+      "message": "ok"
+    }
+  }
+}

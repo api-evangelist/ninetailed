@@ -1,0 +1,81 @@
+{
+  "summary": "Synchronous batch event upsert",
+  "description": "Sends a batch of events across multiple profiles synchronously. Returns updated profiles without experiences or changes. Maximum 200 events, 50 identify events, 50 unique profiles per request.",
+  "request": {
+    "method": "POST",
+    "path": "/events",
+    "queryParameters": {
+      "locale": "en"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "events": [
+        {
+          "type": "identify",
+          "userId": "user-001",
+          "traits": {
+            "plan": "enterprise",
+            "industry": "fintech"
+          },
+          "timestamp": "2026-06-13T09:00:00.000Z"
+        },
+        {
+          "type": "page",
+          "userId": "user-001",
+          "properties": {
+            "url": "https://example.com/pricing",
+            "path": "/pricing",
+            "title": "Pricing"
+          },
+          "timestamp": "2026-06-13T09:01:00.000Z"
+        },
+        {
+          "type": "identify",
+          "userId": "user-002",
+          "traits": {
+            "plan": "starter",
+            "industry": "ecommerce"
+          },
+          "timestamp": "2026-06-13T09:00:30.000Z"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "id": "prof-user-001-abc123",
+          "stableId": "stable-user-001",
+          "random": 0.7823,
+          "audiences": ["audience-enterprise", "audience-pricing-visitors"],
+          "traits": {
+            "plan": "enterprise",
+            "industry": "fintech"
+          },
+          "location": {},
+          "session": {},
+          "stickyVariants": {}
+        },
+        {
+          "id": "prof-user-002-def456",
+          "stableId": "stable-user-002",
+          "random": 0.2341,
+          "audiences": ["audience-starter"],
+          "traits": {
+            "plan": "starter",
+            "industry": "ecommerce"
+          },
+          "location": {},
+          "session": {},
+          "stickyVariants": {}
+        }
+      ],
+      "error": null,
+      "message": "ok"
+    }
+  }
+}
