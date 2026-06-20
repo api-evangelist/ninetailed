@@ -8,7 +8,7 @@ description: >-
   edge. SDKs are available for JavaScript, React, Next.js, Node.js, and React
   Native.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: >-
   https://raw.githubusercontent.com/api-evangelist/ninetailed/refs/heads/main/apis.yml
 created: '2026-06-13'
@@ -32,7 +32,7 @@ apis:
       on audience rules. Deployed on the edge for high performance. Supports
       profile creation, updates, retrieval, deletion, event tracking, and batch
       event import for audience segmentation and A/B test delivery.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
     baseURL: https://experience.ninetailed.co/v2
     tags:
