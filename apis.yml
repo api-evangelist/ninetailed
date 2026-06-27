@@ -67,7 +67,7 @@ common:
     url: https://ninetailedstatus.com/
   - type: X
     url: https://x.com/ninetailedhq
-  - type: Changelog
+  - type: ChangeLog
     url: https://www.contentful.com/developers/docs/ninetailed/ninetailed-changelog/
   - type: Plans
     url: plans/ninetailed-plans-pricing.yml
