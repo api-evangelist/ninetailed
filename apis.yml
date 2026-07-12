@@ -51,6 +51,12 @@ apis:
         url: https://www.contentful.com/help/
 
 common:
+  - type: TrustCenter
+    url: security/ninetailed-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/ninetailed-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/ninetailed-domain-security.yml
   - type: Website
     url: https://www.contentful.com/products/personalization/
   - type: Documentation
