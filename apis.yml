@@ -51,6 +51,8 @@ apis:
         url: https://www.contentful.com/help/
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/ninetailed-agentic-access.yml
   - type: TrustCenter
     url: security/ninetailed-trust-center.yml
   - type: VulnerabilityDisclosure
