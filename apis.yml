@@ -8,7 +8,19 @@ description: >-
   edge. SDKs are available for JavaScript, React, Next.js, Node.js, and React
   Native.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ninetailed.png
 url: >-
   https://raw.githubusercontent.com/api-evangelist/ninetailed/refs/heads/main/apis.yml
 created: '2026-06-13'
@@ -25,31 +37,30 @@ tags:
   - Content Management
 
 apis:
-  - name: Ninetailed Experience API
-    description: >-
-      The core REST API for the Ninetailed personalization platform. Returns
-      visitor profiles and resolves which experience and variant to render based
-      on audience rules. Deployed on the edge for high performance. Supports
-      profile creation, updates, retrieval, deletion, event tracking, and batch
-      event import for audience segmentation and A/B test delivery.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
-    baseURL: https://experience.ninetailed.co/v2
-    tags:
-      - Profiles
-      - Events
-      - Personalization
-      - A/B Testing
-      - Audience Segmentation
-    properties:
-      - type: Documentation
-        url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
-      - type: OpenAPI
-        url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
-    contact:
-      - FN: Ninetailed Support
-        url: https://www.contentful.com/help/
-
+- aid: ninetailed:ninetailed-events-api
+  name: Ninetailed Events API
+  description: Batch event ingestion endpoints for profile enrichment.
+  humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+  baseURL: https://experience.ninetailed.co/v2
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/ninetailed-events-api-openapi.yml
+  - type: Documentation
+    url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+- aid: ninetailed:ninetailed-profiles-api
+  name: Ninetailed Profiles API
+  description: Operations for creating, reading, updating, and deleting visitor profiles.
+  humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
+  baseURL: https://experience.ninetailed.co/v2
+  tags:
+  - Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/ninetailed-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
 common:
   - type: AgenticAccess
     url: agentic-access/ninetailed-agentic-access.yml
