@@ -1,0 +1,655 @@
+openapi: 3.0.1
+info:
+  title: Ninetailed Experience API
+  description: >-
+    The core REST API for the Ninetailed (now Contentful Personalization)
+    platform. Returns visitor profiles and resolves which experience and variant
+    to render based on audience rules. Deployed on the edge for high
+    performance. Supports profile creation, updates, retrieval, deletion, event
+    tracking, and batch event import for audience segmentation and A/B test
+    delivery.
+  version: '2'
+  contact:
+    name: Ninetailed Support
+    url: https://www.contentful.com/help/
+  license:
+    name: Proprietary
+servers:
+  - url: >-
+      https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}
+    description: Ninetailed Experience API edge endpoint
+    variables:
+      organizationId:
+        description: >-
+          The organization ID (Client ID) found in the SDK Keys section on the
+          Optimization tab.
+        default: YOUR_ORGANIZATION_ID
+      environmentSlug:
+        description: The environment slug (e.g. "main").
+        default: main
+tags:
+  - name: Profiles
+    description: Operations for creating, reading, updating, and deleting visitor profiles.
+  - name: Events
+    description: Batch event ingestion endpoints for profile enrichment.
+paths:
+  /profiles:
+    post:
+      operationId: createProfile
+      summary: Create Profile
+      description: >-
+        Creates a new visitor profile and returns the profile object including
+        resolved experiences and variant assignments.
+      tags:
+        - Profiles
+      parameters:
+        - $ref: '#/components/parameters/locale'
+        - $ref: '#/components/parameters/type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+            example:
+              events:
+                - type: page
+                  name: Home
+                  properties:
+                    url: https://example.com/
+                    path: /
+                    title: Home Page
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+      responses:
+        '200':
+          description: Profile created successfully with resolved experiences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /profiles/{profileId}:
+    get:
+      operationId: getProfile
+      summary: Get Profile
+      description: >-
+        Retrieves an existing visitor profile by ID. Does not return experiences
+        or changes.
+      tags:
+        - Profiles
+      parameters:
+        - $ref: '#/components/parameters/profileId'
+        - $ref: '#/components/parameters/locale'
+      responses:
+        '200':
+          description: Profile retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileOnlyResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: updateProfile
+      summary: Update Profile
+      description: >-
+        Updates an existing visitor profile by sending new events. Returns the
+        updated profile with resolved experiences and variant assignments.
+      tags:
+        - Profiles
+      parameters:
+        - $ref: '#/components/parameters/profileId'
+        - $ref: '#/components/parameters/locale'
+        - $ref: '#/components/parameters/type'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+            example:
+              events:
+                - type: identify
+                  userId: user-123
+                  traits:
+                    email: user@example.com
+                    plan: pro
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+      responses:
+        '200':
+          description: Profile updated successfully with resolved experiences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteProfile
+      summary: Delete Profile
+      description: Deletes a visitor profile by ID for GDPR/right-to-erasure compliance.
+      tags:
+        - Profiles
+      parameters:
+        - $ref: '#/components/parameters/profileId'
+      responses:
+        '200':
+          description: Profile deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /events:
+    post:
+      operationId: batchUpsertSync
+      summary: Batch Upsert Events (Synchronous)
+      description: >-
+        Synchronous batch endpoint for upserting events across multiple profiles.
+        Supports up to 200 events total, a maximum of 50 identify events, and up
+        to 50 unique profiles per request. Returns an array of profiles without
+        experiences or changes.
+      tags:
+        - Events
+      parameters:
+        - $ref: '#/components/parameters/locale'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchEventsRequest'
+            example:
+              events:
+                - type: identify
+                  userId: user-abc
+                  traits:
+                    plan: enterprise
+                - type: page
+                  userId: user-abc
+                  properties:
+                    url: https://example.com/pricing
+                    path: /pricing
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/BatchEventsRequest'
+      responses:
+        '200':
+          description: Events processed; returns array of updated profiles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchEventsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /import/events:
+    post:
+      operationId: batchUpsertAsync
+      summary: Batch Upsert Events (Asynchronous)
+      description: >-
+        Asynchronous fire-and-forget batch endpoint for importing events. Returns
+        200 immediately without waiting for processing. Ideal for high-volume
+        imports where response data is not needed.
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchEventsRequest'
+          text/plain:
+            schema:
+              $ref: '#/components/schemas/BatchEventsRequest'
+      responses:
+        '200':
+          description: Request accepted for asynchronous processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncConfirmation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  parameters:
+    profileId:
+      name: profileId
+      in: path
+      required: true
+      description: Unique identifier of the visitor profile.
+      schema:
+        type: string
+    locale:
+      name: locale
+      in: query
+      required: false
+      description: >-
+        BCP 47 locale string used for resolving localized experiences. Defaults
+        to "en".
+      schema:
+        type: string
+        default: en
+        example: en-US
+    type:
+      name: type
+      in: query
+      required: false
+      description: >-
+        Optional request type modifier. Set to "preflight" for pre-render edge
+        requests.
+      schema:
+        type: string
+        enum:
+          - preflight
+  schemas:
+    Event:
+      type: object
+      required:
+        - type
+      description: A behavioral or identity event associated with a visitor profile.
+      properties:
+        type:
+          type: string
+          enum:
+            - page
+            - track
+            - identify
+            - screen
+            - component
+          description: The type of event being recorded.
+        userId:
+          type: string
+          description: >-
+            Stable user identifier for linking anonymous and identified
+            sessions.
+        anonymousId:
+          type: string
+          description: Anonymous identifier for unidentified visitors.
+        name:
+          type: string
+          description: Name of the page, screen, or track event.
+        traits:
+          type: object
+          additionalProperties: true
+          description: >-
+            Key-value pairs describing user attributes (used with identify
+            events).
+        properties:
+          type: object
+          additionalProperties: true
+          description: >-
+            Key-value pairs describing event properties (used with page/track
+            events).
+          properties:
+            url:
+              type: string
+              format: uri
+              description: Full URL of the page.
+            path:
+              type: string
+              description: Path portion of the URL.
+            title:
+              type: string
+              description: Page title.
+            referrer:
+              type: string
+              format: uri
+              description: Referring URL.
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of when the event occurred.
+    ProfileRequestOptions:
+      type: object
+      description: Optional configuration for the profile request.
+      properties:
+        preflight:
+          type: boolean
+          description: >-
+            When true, performs edge-optimized preflight resolution without
+            full profile persistence.
+    ProfileRequest:
+      type: object
+      required:
+        - events
+      description: Request body for creating or updating a visitor profile.
+      properties:
+        events:
+          type: array
+          description: One or more events to record for this profile.
+          items:
+            $ref: '#/components/schemas/Event'
+        options:
+          $ref: '#/components/schemas/ProfileRequestOptions'
+    BatchEventsRequest:
+      type: object
+      required:
+        - events
+      description: >-
+        Request body for batch event ingestion. Maximum 200 events, 50 identify
+        events, 50 unique profiles per request.
+      properties:
+        events:
+          type: array
+          maxItems: 200
+          description: Array of events to ingest across multiple profiles.
+          items:
+            $ref: '#/components/schemas/Event'
+    Location:
+      type: object
+      description: Geographic location resolved from the visitor's IP address.
+      properties:
+        lat:
+          type: number
+          format: double
+          description: Latitude coordinate.
+        lon:
+          type: number
+          format: double
+          description: Longitude coordinate.
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: Region or state code.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        timezone:
+          type: string
+          description: IANA timezone identifier (e.g. "America/New_York").
+    Session:
+      type: object
+      description: Session-level metadata for the visitor.
+      properties:
+        id:
+          type: string
+          description: Unique session identifier.
+        isReturningVisitor:
+          type: boolean
+          description: True if the visitor has been seen in a previous session.
+        landingPage:
+          type: string
+          description: URL of the first page visited in this session.
+        count:
+          type: integer
+          description: Number of sessions this visitor has had.
+        sessionLength:
+          type: integer
+          description: Length of the current session in seconds.
+    Profile:
+      type: object
+      description: >-
+        A visitor profile containing identity, behavioral, and session data used
+        for personalization.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the visitor profile.
+        stableId:
+          type: string
+          description: Stable cross-session identifier for the visitor.
+        random:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Random value (0-1) used for traffic splitting in A/B tests.
+        audiences:
+          type: array
+          description: List of audience IDs the visitor currently qualifies for.
+          items:
+            type: string
+        traits:
+          type: object
+          additionalProperties: true
+          description: Merged identify traits for the visitor.
+        location:
+          $ref: '#/components/schemas/Location'
+        session:
+          $ref: '#/components/schemas/Session'
+        jurisdiction:
+          type: string
+          description: >-
+            Regulatory jurisdiction code (e.g. "GDPR") resolved from location.
+        stickyVariants:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            Map of experience ID to variant index for sticky (consistent)
+            assignment.
+    Experience:
+      type: object
+      description: A resolved experience with the variant the visitor should receive.
+      properties:
+        experienceId:
+          type: string
+          description: Unique identifier of the experience/experiment.
+        variantIndex:
+          type: integer
+          description: >-
+            Zero-based index of the assigned variant (0 = control, 1+ =
+            variants).
+        variants:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            Map of component keys to variant entry IDs for this experience
+            assignment.
+        sticky:
+          type: boolean
+          description: When true, the variant assignment is persisted for consistency.
+    Change:
+      type: object
+      description: >-
+        A content change to apply for a personalized experience, keyed by
+        component.
+      properties:
+        key:
+          type: string
+          description: Identifier of the component or content slot to change.
+        type:
+          type: string
+          enum:
+            - Variable
+          description: Type of change (currently only "Variable" is supported).
+        value:
+          type: string
+          description: The variant entry ID to render for this component.
+        meta:
+          type: object
+          description: Metadata about the experience driving this change.
+          properties:
+            experienceId:
+              type: string
+              description: ID of the experience that produced this change.
+            variantIndex:
+              type: integer
+              description: Variant index assigned for this experience.
+    ProfileResponse:
+      type: object
+      description: >-
+        Standard envelope response containing a profile with resolved experiences
+        and changes.
+      properties:
+        data:
+          type: object
+          description: Response payload.
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+            experiences:
+              type: array
+              description: Resolved experiences for this profile.
+              items:
+                $ref: '#/components/schemas/Experience'
+            changes:
+              type: array
+              description: Content changes to apply for personalization.
+              items:
+                $ref: '#/components/schemas/Change'
+        error:
+          type: object
+          nullable: true
+          description: Null on success; error details on failure.
+        message:
+          type: string
+          example: ok
+    ProfileOnlyResponse:
+      type: object
+      description: Response envelope containing only the profile (no experiences or changes).
+      properties:
+        data:
+          $ref: '#/components/schemas/Profile'
+        error:
+          type: object
+          nullable: true
+        message:
+          type: string
+          example: ok
+    DeleteResponse:
+      type: object
+      description: Response envelope for a successful delete operation.
+      properties:
+        data:
+          type: object
+          description: Empty object on successful deletion.
+        error:
+          type: object
+          nullable: true
+        message:
+          type: string
+          example: ok
+    BatchEventsResponse:
+      type: object
+      description: >-
+        Response envelope for synchronous batch events, containing profile
+        updates without experiences.
+      properties:
+        data:
+          type: array
+          description: Array of updated profiles.
+          items:
+            $ref: '#/components/schemas/Profile'
+        error:
+          type: object
+          nullable: true
+        message:
+          type: string
+          example: ok
+    AsyncConfirmation:
+      type: object
+      description: Confirmation that an asynchronous import request was accepted.
+      properties:
+        data:
+          type: object
+          description: Empty object; processing happens asynchronously.
+        error:
+          type: object
+          nullable: true
+        message:
+          type: string
+          example: ok
+    ApiError:
+      type: object
+      description: Error response envelope.
+      required:
+        - message
+        - error
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          description: Empty object on error.
+        error:
+          type: object
+          description: Structured error details.
+          properties:
+            code:
+              type: string
+              enum:
+                - ERR_INVALID_DATA
+                - ERR_CONFIG_NOT_FOUND
+                - ERR_PROFILE_NOT_FOUND
+                - ERR_NAMESPACE_MISMATCH
+                - ERR_PROFILE_OVERLOAD
+                - ERR_INTERNAL_SERVER_ERROR
+              description: Machine-readable error code.
+  responses:
+    BadRequest:
+      description: Invalid request data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Invalid data provided
+            data: {}
+            error:
+              code: ERR_INVALID_DATA
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Profile not found
+            data: {}
+            error:
+              code: ERR_PROFILE_NOT_FOUND
+    TooManyRequests:
+      description: Profile has exceeded the allowed number of concurrent requests.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Profile overload
+            data: {}
+            error:
+              code: ERR_PROFILE_OVERLOAD
+    InternalServerError:
+      description: An unexpected server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Internal server error
+            data: {}
+            error:
+              code: ERR_INTERNAL_SERVER_ERROR

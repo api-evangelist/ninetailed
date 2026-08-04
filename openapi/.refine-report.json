@@ -1,0 +1,16 @@
+{
+  "provider": "ninetailed",
+  "sources": [
+    "ninetailed-events-api-openapi.yml",
+    "ninetailed-profiles-api-openapi.yml"
+  ],
+  "outputs": [
+    "ninetailed-events-api-openapi.yml",
+    "ninetailed-profiles-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
