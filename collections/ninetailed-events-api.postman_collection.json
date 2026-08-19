@@ -1,0 +1,595 @@
+{
+  "item": [
+    {
+      "id": "992fce6e-e3b9-4e3b-82e6-23a26805c9fc",
+      "name": "Events",
+      "description": {
+        "content": "Batch event ingestion endpoints for profile enrichment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db9c69ed-17a2-43c8-854f-d2316de0de67",
+          "name": "Batch Upsert Events (Synchronous)",
+          "request": {
+            "name": "Batch Upsert Events (Synchronous)",
+            "description": {
+              "content": "Synchronous batch endpoint for upserting events across multiple profiles. Supports up to 200 events total, a maximum of 50 identify events, and up to 50 unique profiles per request. Returns an array of profiles without experiences or changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en",
+                  "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 5989.830545161355,\n        \"key_1\": 1987.344481410188\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": \"string\",\n        \"key_1\": 8680\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 8741\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fc8eec7f-c046-4857-8501-ac17e0b84adb",
+              "name": "Events processed; returns array of updated profiles.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-abc\",\n      \"traits\": {\n        \"plan\": \"enterprise\"\n      }\n    },\n    {\n      \"type\": \"page\",\n      \"userId\": \"user-abc\",\n      \"properties\": {\n        \"url\": \"https://example.com/pricing\",\n        \"path\": \"/pricing\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"stableId\": \"string\",\n      \"random\": 0.45355313052112944,\n      \"audiences\": [\n        \"string\",\n        \"string\"\n      ],\n      \"traits\": {\n        \"key_0\": false\n      },\n      \"location\": {\n        \"lat\": 3888.640236772837,\n        \"lon\": 2921.6159286136067,\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"country\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"session\": {\n        \"id\": \"string\",\n        \"isReturningVisitor\": false,\n        \"landingPage\": \"string\",\n        \"count\": 7510,\n        \"sessionLength\": 9050\n      },\n      \"jurisdiction\": \"string\",\n      \"stickyVariants\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"stableId\": \"string\",\n      \"random\": 0.9578255277963164,\n      \"audiences\": [\n        \"string\",\n        \"string\"\n      ],\n      \"traits\": {\n        \"key_0\": 9098.418779548692,\n        \"key_1\": true,\n        \"key_2\": true,\n        \"key_3\": 7820.081321511063,\n        \"key_4\": true\n      },\n      \"location\": {\n        \"lat\": 4225.7976990668885,\n        \"lon\": 9395.01720150894,\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"country\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"session\": {\n        \"id\": \"string\",\n        \"isReturningVisitor\": false,\n        \"landingPage\": \"string\",\n        \"count\": 2371,\n        \"sessionLength\": 8544\n      },\n      \"jurisdiction\": \"string\",\n      \"stickyVariants\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b4c4fb0-a5bf-4a5d-9879-a77a11094753",
+              "name": "Invalid request data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-abc\",\n      \"traits\": {\n        \"plan\": \"enterprise\"\n      }\n    },\n    {\n      \"type\": \"page\",\n      \"userId\": \"user-abc\",\n      \"properties\": {\n        \"url\": \"https://example.com/pricing\",\n        \"path\": \"/pricing\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid data provided\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INVALID_DATA\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "524c268d-afc2-4466-8b15-5ed8c7ea1d8f",
+              "name": "Profile has exceeded the allowed number of concurrent requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-abc\",\n      \"traits\": {\n        \"plan\": \"enterprise\"\n      }\n    },\n    {\n      \"type\": \"page\",\n      \"userId\": \"user-abc\",\n      \"properties\": {\n        \"url\": \"https://example.com/pricing\",\n        \"path\": \"/pricing\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile overload\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_OVERLOAD\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac36c643-3437-4875-9a9e-f815f26f6e8b",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-abc\",\n      \"traits\": {\n        \"plan\": \"enterprise\"\n      }\n    },\n    {\n      \"type\": \"page\",\n      \"userId\": \"user-abc\",\n      \"properties\": {\n        \"url\": \"https://example.com/pricing\",\n        \"path\": \"/pricing\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02c7c946-d3a4-4a42-aebd-c11878ee8078",
+          "name": "Batch Upsert Events (Asynchronous)",
+          "request": {
+            "name": "Batch Upsert Events (Asynchronous)",
+            "description": {
+              "content": "Asynchronous fire-and-forget batch endpoint for importing events. Returns 200 immediately without waiting for processing. Ideal for high-volume imports where response data is not needed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "import",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 5989.830545161355,\n        \"key_1\": 1987.344481410188\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": \"string\",\n        \"key_1\": 8680\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 8741\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "86af38ac-324e-44a3-9f15-810c92baedb9",
+              "name": "Request accepted for asynchronous processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": \"string\"\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": false,\n        \"key_1\": 853.3120936733651\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": 6522\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "119ee275-ec8b-4fa8-b184-bb6a2822ae90",
+              "name": "Invalid request data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": \"string\"\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": false,\n        \"key_1\": 853.3120936733651\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": 6522\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid data provided\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INVALID_DATA\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a866ce1f-3ed9-4df8-b256-1386ff4630c9",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": \"string\"\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": false,\n        \"key_1\": 853.3120936733651\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": 6522\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "YOUR_ORGANIZATION_ID",
+      "key": "organizationId"
+    },
+    {
+      "description": {
+        "content": "The environment slug (e.g. \"main\").",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "main",
+      "key": "environmentSlug"
+    },
+    {
+      "type": "string",
+      "value": "https://experience.ninetailed.co/v2/organizations/{{organizationId}}/environments/{{environmentSlug}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "51d13cad-c172-446d-ad06-b761ee49829b",
+    "name": "Ninetailed Experience Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The core REST API for the Ninetailed (now Contentful Personalization) platform. Returns visitor profiles and resolves which experience and variant to render based on audience rules. Deployed on the edge for high performance. Supports profile creation, updates, retrieval, deletion, event tracking, and batch event import for audience segmentation and A/B test delivery.\n\nContact Support:\n Name: Ninetailed Support",
+      "type": "text/plain"
+    }
+  }
+}

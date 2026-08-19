@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ninetailed Experience Events Profiles API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/profiles",
+            "params": [
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Optional request type modifier. Set to \"preflight\" for pre-render edge requests."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new visitor profile and returns the profile object including resolved experiences and variant assignments."
+        },
+        {
+          "info": {
+            "name": "Get Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the visitor profile."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+              }
+            ]
+          },
+          "docs": "Retrieves an existing visitor profile by ID. Does not return experiences or changes."
+        },
+        {
+          "info": {
+            "name": "Update Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the visitor profile."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Optional request type modifier. Set to \"preflight\" for pre-render edge requests."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing visitor profile by sending new events. Returns the updated profile with resolved experiences and variant assignments."
+        },
+        {
+          "info": {
+            "name": "Delete Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the visitor profile."
+              }
+            ]
+          },
+          "docs": "Deletes a visitor profile by ID for GDPR/right-to-erasure compliance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

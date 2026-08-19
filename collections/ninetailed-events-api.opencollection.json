@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ninetailed Experience Events API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch Upsert Events (Synchronous)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/events",
+            "params": [
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Synchronous batch endpoint for upserting events across multiple profiles. Supports up to 200 events total, a maximum of 50 identify events, and up to 50 unique profiles per request. Returns an array of profiles without experiences or changes."
+        },
+        {
+          "info": {
+            "name": "Batch Upsert Events (Asynchronous)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}/import/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Asynchronous fire-and-forget batch endpoint for importing events. Returns 200 immediately without waiting for processing. Ideal for high-volume imports where response data is not needed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

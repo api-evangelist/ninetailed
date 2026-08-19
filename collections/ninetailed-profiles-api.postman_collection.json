@@ -1,0 +1,1366 @@
+{
+  "item": [
+    {
+      "id": "679e78e6-0036-44e0-b8d5-421497342ce9",
+      "name": "Profiles",
+      "description": {
+        "content": "Operations for creating, reading, updating, and deleting visitor profiles.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "efd3ecfd-96a0-4f25-8efa-5e7ae425ebae",
+          "name": "Create Profile",
+          "request": {
+            "name": "Create Profile",
+            "description": {
+              "content": "Creates a new visitor profile and returns the profile object including resolved experiences and variant assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en",
+                  "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Optional request type modifier. Set to \"preflight\" for pre-render edge requests."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 8246.605032712392\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": false\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ],\n  \"options\": {\n    \"preflight\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dc7e8616-95b0-4dae-9f18-0117a835a615",
+              "name": "Profile created successfully with resolved experiences.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"page\",\n      \"name\": \"Home\",\n      \"properties\": {\n        \"url\": \"https://example.com/\",\n        \"path\": \"/\",\n        \"title\": \"Home Page\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"profile\": {\n      \"id\": \"string\",\n      \"stableId\": \"string\",\n      \"random\": 0.4392557661067321,\n      \"audiences\": [\n        \"string\",\n        \"string\"\n      ],\n      \"traits\": {\n        \"key_0\": true\n      },\n      \"location\": {\n        \"lat\": 9840.005251259838,\n        \"lon\": 4233.378567020509,\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"country\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"session\": {\n        \"id\": \"string\",\n        \"isReturningVisitor\": false,\n        \"landingPage\": \"string\",\n        \"count\": 3575,\n        \"sessionLength\": 2040\n      },\n      \"jurisdiction\": \"string\",\n      \"stickyVariants\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    \"experiences\": [\n      {\n        \"experienceId\": \"string\",\n        \"variantIndex\": 8273,\n        \"variants\": {\n          \"key_0\": \"string\"\n        },\n        \"sticky\": false\n      },\n      {\n        \"experienceId\": \"string\",\n        \"variantIndex\": 6243,\n        \"variants\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"sticky\": true\n      }\n    ],\n    \"changes\": [\n      {\n        \"key\": \"string\",\n        \"type\": \"Variable\",\n        \"value\": \"string\",\n        \"meta\": {\n          \"experienceId\": \"string\",\n          \"variantIndex\": 3732\n        }\n      },\n      {\n        \"key\": \"string\",\n        \"type\": \"Variable\",\n        \"value\": \"string\",\n        \"meta\": {\n          \"experienceId\": \"string\",\n          \"variantIndex\": 6797\n        }\n      }\n    ]\n  },\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7c24e54-f929-46ba-b7e9-c09e92d2a567",
+              "name": "Invalid request data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"page\",\n      \"name\": \"Home\",\n      \"properties\": {\n        \"url\": \"https://example.com/\",\n        \"path\": \"/\",\n        \"title\": \"Home Page\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid data provided\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INVALID_DATA\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae695c6c-f9ae-4b82-ba64-3026c4e354e6",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"page\",\n      \"name\": \"Home\",\n      \"properties\": {\n        \"url\": \"https://example.com/\",\n        \"path\": \"/\",\n        \"title\": \"Home Page\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile not found\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_NOT_FOUND\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c45b23c-b941-428b-8d76-887d3a395a1f",
+              "name": "Profile has exceeded the allowed number of concurrent requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"page\",\n      \"name\": \"Home\",\n      \"properties\": {\n        \"url\": \"https://example.com/\",\n        \"path\": \"/\",\n        \"title\": \"Home Page\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile overload\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_OVERLOAD\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae410bee-a5aa-4b80-a8f3-4648be1ca40f",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"page\",\n      \"name\": \"Home\",\n      \"properties\": {\n        \"url\": \"https://example.com/\",\n        \"path\": \"/\",\n        \"title\": \"Home Page\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecdc6bfb-dc91-474f-aa55-903d86e47130",
+          "name": "Get Profile",
+          "request": {
+            "name": "Get Profile",
+            "description": {
+              "content": "Retrieves an existing visitor profile by ID. Does not return experiences or changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":profileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en",
+                  "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileId",
+                  "description": "(Required) Unique identifier of the visitor profile."
+                },
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e8b6fc5-9ecc-4114-9352-ba0c96d3e198",
+              "name": "Profile retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"stableId\": \"string\",\n    \"random\": 0.6346446866799671,\n    \"audiences\": [\n      \"string\",\n      \"string\"\n    ],\n    \"traits\": {\n      \"key_0\": 6048\n    },\n    \"location\": {\n      \"lat\": 5099.055465728876,\n      \"lon\": 347.92468449086124,\n      \"city\": \"string\",\n      \"region\": \"string\",\n      \"country\": \"string\",\n      \"timezone\": \"string\"\n    },\n    \"session\": {\n      \"id\": \"string\",\n      \"isReturningVisitor\": false,\n      \"landingPage\": \"string\",\n      \"count\": 5159,\n      \"sessionLength\": 2662\n    },\n    \"jurisdiction\": \"string\",\n    \"stickyVariants\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58515ec6-70b2-4749-b392-6f5e95fe46e3",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile not found\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_NOT_FOUND\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d19654be-0dce-405f-8650-6fb8925a07e2",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7756c34-1384-4724-990b-d0eaaa7dcfe2",
+          "name": "Update Profile",
+          "request": {
+            "name": "Update Profile",
+            "description": {
+              "content": "Updates an existing visitor profile by sending new events. Returns the updated profile with resolved experiences and variant assignments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":profileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en",
+                  "description": "BCP 47 locale string used for resolving localized experiences. Defaults to \"en\"."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Optional request type modifier. Set to \"preflight\" for pre-render edge requests."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileId",
+                  "description": "(Required) Unique identifier of the visitor profile."
+                },
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": \"string\"\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\",\n        \"key_0\": 5159,\n        \"key_1\": 6204\n      },\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"anonymousId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"traits\": {\n        \"key_0\": 1235,\n        \"key_1\": 4685.08556294743,\n        \"key_2\": 924\n      },\n      \"properties\": {\n        \"url\": \"<uri>\",\n        \"path\": \"<string>\",\n        \"title\": \"<string>\",\n        \"referrer\": \"<uri>\"\n      },\n      \"timestamp\": \"<dateTime>\"\n    }\n  ],\n  \"options\": {\n    \"preflight\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac93b465-1fc9-4b7c-ac83-e3a942ad5f98",
+              "name": "Profile updated successfully with resolved experiences.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-123\",\n      \"traits\": {\n        \"email\": \"user@example.com\",\n        \"plan\": \"pro\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"profile\": {\n      \"id\": \"string\",\n      \"stableId\": \"string\",\n      \"random\": 0.5515140698856263,\n      \"audiences\": [\n        \"string\",\n        \"string\"\n      ],\n      \"traits\": {\n        \"key_0\": true,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"location\": {\n        \"lat\": 8303.362250205044,\n        \"lon\": 4006.3184426762523,\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"country\": \"string\",\n        \"timezone\": \"string\"\n      },\n      \"session\": {\n        \"id\": \"string\",\n        \"isReturningVisitor\": false,\n        \"landingPage\": \"string\",\n        \"count\": 3845,\n        \"sessionLength\": 3916\n      },\n      \"jurisdiction\": \"string\",\n      \"stickyVariants\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"experiences\": [\n      {\n        \"experienceId\": \"string\",\n        \"variantIndex\": 895,\n        \"variants\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"sticky\": true\n      },\n      {\n        \"experienceId\": \"string\",\n        \"variantIndex\": 9046,\n        \"variants\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"sticky\": true\n      }\n    ],\n    \"changes\": [\n      {\n        \"key\": \"string\",\n        \"type\": \"Variable\",\n        \"value\": \"string\",\n        \"meta\": {\n          \"experienceId\": \"string\",\n          \"variantIndex\": 3016\n        }\n      },\n      {\n        \"key\": \"string\",\n        \"type\": \"Variable\",\n        \"value\": \"string\",\n        \"meta\": {\n          \"experienceId\": \"string\",\n          \"variantIndex\": 7519\n        }\n      }\n    ]\n  },\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c96d38c-3d68-40e1-91ed-548682d5d9d6",
+              "name": "Invalid request data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-123\",\n      \"traits\": {\n        \"email\": \"user@example.com\",\n        \"plan\": \"pro\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid data provided\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INVALID_DATA\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8c9ef7f-c727-4b30-ae0d-f06d6579672a",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-123\",\n      \"traits\": {\n        \"email\": \"user@example.com\",\n        \"plan\": \"pro\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile not found\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_NOT_FOUND\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e6ae6bf-283b-4d65-aa72-8430e45882ac",
+              "name": "Profile has exceeded the allowed number of concurrent requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-123\",\n      \"traits\": {\n        \"email\": \"user@example.com\",\n        \"plan\": \"pro\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile overload\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_OVERLOAD\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbab91a9-a9b3-4679-bf02-2d2aaaff4161",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"identify\",\n      \"userId\": \"user-123\",\n      \"traits\": {\n        \"email\": \"user@example.com\",\n        \"plan\": \"pro\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c83f52f4-eacf-43ab-9d5d-726ad94de2ec",
+          "name": "Delete Profile",
+          "request": {
+            "name": "Delete Profile",
+            "description": {
+              "content": "Deletes a visitor profile by ID for GDPR/right-to-erasure compliance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":profileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileId",
+                  "description": "(Required) Unique identifier of the visitor profile."
+                },
+                {
+                  "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                  "type": "any",
+                  "value": "{{organizationId}}",
+                  "key": "organizationId"
+                },
+                {
+                  "description": "The environment slug (e.g. \"main\").",
+                  "type": "any",
+                  "value": "{{environmentSlug}}",
+                  "key": "environmentSlug"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0693c3d-e853-4256-a095-7e513a8c419b",
+              "name": "Profile deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"error\": {},\n  \"message\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4824463-055d-4d01-a900-b8922e2df6ec",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Profile not found\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_PROFILE_NOT_FOUND\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb4db0a0-0020-4da7-813f-0f1935e9baa2",
+              "name": "An unexpected server error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) Unique identifier of the visitor profile."
+                    },
+                    {
+                      "description": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+                      "type": "any",
+                      "value": "{{organizationId}}",
+                      "key": "organizationId"
+                    },
+                    {
+                      "description": "The environment slug (e.g. \"main\").",
+                      "type": "any",
+                      "value": "{{environmentSlug}}",
+                      "key": "environmentSlug"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal server error\",\n  \"data\": {},\n  \"error\": {\n    \"code\": \"ERR_INTERNAL_SERVER_ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The organization ID (Client ID) found in the SDK Keys section on the Optimization tab.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "YOUR_ORGANIZATION_ID",
+      "key": "organizationId"
+    },
+    {
+      "description": {
+        "content": "The environment slug (e.g. \"main\").",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "main",
+      "key": "environmentSlug"
+    },
+    {
+      "type": "string",
+      "value": "https://experience.ninetailed.co/v2/organizations/{{organizationId}}/environments/{{environmentSlug}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "80fd86df-dbaf-4170-b8a8-686852bb8b07",
+    "name": "Ninetailed Experience Events Profiles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The core REST API for the Ninetailed (now Contentful Personalization) platform. Returns visitor profiles and resolves which experience and variant to render based on audience rules. Deployed on the edge for high performance. Supports profile creation, updates, retrieval, deletion, event tracking, and batch event import for audience segmentation and A/B test delivery.\n\nContact Support:\n Name: Ninetailed Support",
+      "type": "text/plain"
+    }
+  }
+}
