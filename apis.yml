@@ -43,6 +43,8 @@ apis:
   humanURL: https://www.contentful.com/developers/docs/ninetailed/experience-api/
   baseURL: https://experience.ninetailed.co/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
