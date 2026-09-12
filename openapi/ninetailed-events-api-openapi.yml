@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Ninetailed Experience Events API
   description: The core REST API for the Ninetailed (now Contentful Personalization) platform. Returns visitor profiles and resolves which experience and variant to render based on audience rules. Deployed on the edge for high performance. Supports profile creation, updates, retrieval, deletion, event tracking, and batch event import for audience segmentation and A/B test delivery.
@@ -92,36 +92,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  parameters:
-    locale:
-      name: locale
-      in: query
-      required: false
-      description: BCP 47 locale string used for resolving localized experiences. Defaults to "en".
-      schema:
-        type: string
-        default: en
-        example: en-US
   schemas:
-    Session:
-      type: object
-      description: Session-level metadata for the visitor.
-      properties:
-        id:
-          type: string
-          description: Unique session identifier.
-        isReturningVisitor:
-          type: boolean
-          description: True if the visitor has been seen in a previous session.
-        landingPage:
-          type: string
-          description: URL of the first page visited in this session.
-        count:
-          type: integer
-          description: Number of sessions this visitor has had.
-        sessionLength:
-          type: integer
-          description: Length of the current session in seconds.
     Location:
       type: object
       description: Geographic location resolved from the visitor's IP address.
@@ -154,63 +125,12 @@ components:
           type: object
           description: Empty object; processing happens asynchronously.
         error:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         message:
           type: string
           example: ok
-    BatchEventsResponse:
-      type: object
-      description: Response envelope for synchronous batch events, containing profile updates without experiences.
-      properties:
-        data:
-          type: array
-          description: Array of updated profiles.
-          items:
-            $ref: '#/components/schemas/Profile'
-        error:
-          type: object
-          nullable: true
-        message:
-          type: string
-          example: ok
-    Profile:
-      type: object
-      description: A visitor profile containing identity, behavioral, and session data used for personalization.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the visitor profile.
-        stableId:
-          type: string
-          description: Stable cross-session identifier for the visitor.
-        random:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 1
-          description: Random value (0-1) used for traffic splitting in A/B tests.
-        audiences:
-          type: array
-          description: List of audience IDs the visitor currently qualifies for.
-          items:
-            type: string
-        traits:
-          type: object
-          additionalProperties: true
-          description: Merged identify traits for the visitor.
-        location:
-          $ref: '#/components/schemas/Location'
-        session:
-          $ref: '#/components/schemas/Session'
-        jurisdiction:
-          type: string
-          description: Regulatory jurisdiction code (e.g. "GDPR") resolved from location.
-        stickyVariants:
-          type: object
-          additionalProperties:
-            type: string
-          description: Map of experience ID to variant index for sticky (consistent) assignment.
     BatchEventsRequest:
       type: object
       required:
@@ -223,6 +143,22 @@ components:
           description: Array of events to ingest across multiple profiles.
           items:
             $ref: '#/components/schemas/Event'
+    BatchEventsResponse:
+      type: object
+      description: Response envelope for synchronous batch events, containing profile updates without experiences.
+      properties:
+        data:
+          type: array
+          description: Array of updated profiles.
+          items:
+            $ref: '#/components/schemas/Profile'
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
     ApiError:
       type: object
       description: Error response envelope.
@@ -301,18 +237,63 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp of when the event occurred.
+    Profile:
+      type: object
+      description: A visitor profile containing identity, behavioral, and session data used for personalization.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the visitor profile.
+        stableId:
+          type: string
+          description: Stable cross-session identifier for the visitor.
+        random:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Random value (0-1) used for traffic splitting in A/B tests.
+        audiences:
+          type: array
+          description: List of audience IDs the visitor currently qualifies for.
+          items:
+            type: string
+        traits:
+          type: object
+          additionalProperties: true
+          description: Merged identify traits for the visitor.
+        location:
+          $ref: '#/components/schemas/Location'
+        session:
+          $ref: '#/components/schemas/Session'
+        jurisdiction:
+          type: string
+          description: Regulatory jurisdiction code (e.g. "GDPR") resolved from location.
+        stickyVariants:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of experience ID to variant index for sticky (consistent) assignment.
+    Session:
+      type: object
+      description: Session-level metadata for the visitor.
+      properties:
+        id:
+          type: string
+          description: Unique session identifier.
+        isReturningVisitor:
+          type: boolean
+          description: True if the visitor has been seen in a previous session.
+        landingPage:
+          type: string
+          description: URL of the first page visited in this session.
+        count:
+          type: integer
+          description: Number of sessions this visitor has had.
+        sessionLength:
+          type: integer
+          description: Length of the current session in seconds.
   responses:
-    BadRequest:
-      description: Invalid request data.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Invalid data provided
-            data: {}
-            error:
-              code: ERR_INVALID_DATA
     TooManyRequests:
       description: Profile has exceeded the allowed number of concurrent requests.
       content:
@@ -335,3 +316,24 @@ components:
             data: {}
             error:
               code: ERR_INTERNAL_SERVER_ERROR
+    BadRequest:
+      description: Invalid request data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Invalid data provided
+            data: {}
+            error:
+              code: ERR_INVALID_DATA
+  parameters:
+    locale:
+      name: locale
+      in: query
+      required: false
+      description: BCP 47 locale string used for resolving localized experiences. Defaults to "en".
+      schema:
+        type: string
+        default: en
+        example: en-US

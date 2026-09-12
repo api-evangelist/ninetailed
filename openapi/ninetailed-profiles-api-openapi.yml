@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Ninetailed Experience Events Profiles API
   description: The core REST API for the Ninetailed (now Contentful Personalization) platform. Returns visitor profiles and resolves which experience and variant to render based on audience rules. Deployed on the edge for high performance. Supports profile creation, updates, retrieval, deletion, event tracking, and batch event import for audience segmentation and A/B test delivery.
@@ -147,52 +147,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    Session:
-      type: object
-      description: Session-level metadata for the visitor.
-      properties:
-        id:
-          type: string
-          description: Unique session identifier.
-        isReturningVisitor:
-          type: boolean
-          description: True if the visitor has been seen in a previous session.
-        landingPage:
-          type: string
-          description: URL of the first page visited in this session.
-        count:
-          type: integer
-          description: Number of sessions this visitor has had.
-        sessionLength:
-          type: integer
-          description: Length of the current session in seconds.
-    ProfileResponse:
-      type: object
-      description: Standard envelope response containing a profile with resolved experiences and changes.
-      properties:
-        data:
-          type: object
-          description: Response payload.
-          properties:
-            profile:
-              $ref: '#/components/schemas/Profile'
-            experiences:
-              type: array
-              description: Resolved experiences for this profile.
-              items:
-                $ref: '#/components/schemas/Experience'
-            changes:
-              type: array
-              description: Content changes to apply for personalization.
-              items:
-                $ref: '#/components/schemas/Change'
-        error:
-          type: object
-          nullable: true
-          description: Null on success; error details on failure.
-        message:
-          type: string
-          example: ok
     DeleteResponse:
       type: object
       description: Response envelope for a successful delete operation.
@@ -201,11 +155,55 @@ components:
           type: object
           description: Empty object on successful deletion.
         error:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         message:
           type: string
           example: ok
+    Experience:
+      type: object
+      description: A resolved experience with the variant the visitor should receive.
+      properties:
+        experienceId:
+          type: string
+          description: Unique identifier of the experience/experiment.
+        variantIndex:
+          type: integer
+          description: Zero-based index of the assigned variant (0 = control, 1+ = variants).
+        variants:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of component keys to variant entry IDs for this experience assignment.
+        sticky:
+          type: boolean
+          description: When true, the variant assignment is persisted for consistency.
+    Change:
+      type: object
+      description: A content change to apply for a personalized experience, keyed by component.
+      properties:
+        key:
+          type: string
+          description: Identifier of the component or content slot to change.
+        type:
+          type: string
+          enum:
+          - Variable
+          description: Type of change (currently only "Variable" is supported).
+        value:
+          type: string
+          description: The variant entry ID to render for this component.
+        meta:
+          type: object
+          description: Metadata about the experience driving this change.
+          properties:
+            experienceId:
+              type: string
+              description: ID of the experience that produced this change.
+            variantIndex:
+              type: integer
+              description: Variant index assigned for this experience.
     ProfileRequestOptions:
       type: object
       description: Optional configuration for the profile request.
@@ -264,43 +262,6 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp of when the event occurred.
-    Location:
-      type: object
-      description: Geographic location resolved from the visitor's IP address.
-      properties:
-        lat:
-          type: number
-          format: double
-          description: Latitude coordinate.
-        lon:
-          type: number
-          format: double
-          description: Longitude coordinate.
-        city:
-          type: string
-          description: City name.
-        region:
-          type: string
-          description: Region or state code.
-        country:
-          type: string
-          description: ISO 3166-1 alpha-2 country code.
-        timezone:
-          type: string
-          description: IANA timezone identifier (e.g. "America/New_York").
-    ProfileRequest:
-      type: object
-      required:
-      - events
-      description: Request body for creating or updating a visitor profile.
-      properties:
-        events:
-          type: array
-          description: One or more events to record for this profile.
-          items:
-            $ref: '#/components/schemas/Event'
-        options:
-          $ref: '#/components/schemas/ProfileRequestOptions'
     ApiError:
       type: object
       description: Error response envelope.
@@ -328,6 +289,103 @@ components:
               - ERR_PROFILE_OVERLOAD
               - ERR_INTERNAL_SERVER_ERROR
               description: Machine-readable error code.
+    ProfileResponse:
+      type: object
+      description: Standard envelope response containing a profile with resolved experiences and changes.
+      properties:
+        data:
+          type: object
+          description: Response payload.
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+            experiences:
+              type: array
+              description: Resolved experiences for this profile.
+              items:
+                $ref: '#/components/schemas/Experience'
+            changes:
+              type: array
+              description: Content changes to apply for personalization.
+              items:
+                $ref: '#/components/schemas/Change'
+        error:
+          type:
+          - object
+          - 'null'
+          description: Null on success; error details on failure.
+        message:
+          type: string
+          example: ok
+    ProfileOnlyResponse:
+      type: object
+      description: Response envelope containing only the profile (no experiences or changes).
+      properties:
+        data:
+          $ref: '#/components/schemas/Profile'
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
+    Session:
+      type: object
+      description: Session-level metadata for the visitor.
+      properties:
+        id:
+          type: string
+          description: Unique session identifier.
+        isReturningVisitor:
+          type: boolean
+          description: True if the visitor has been seen in a previous session.
+        landingPage:
+          type: string
+          description: URL of the first page visited in this session.
+        count:
+          type: integer
+          description: Number of sessions this visitor has had.
+        sessionLength:
+          type: integer
+          description: Length of the current session in seconds.
+    ProfileRequest:
+      type: object
+      required:
+      - events
+      description: Request body for creating or updating a visitor profile.
+      properties:
+        events:
+          type: array
+          description: One or more events to record for this profile.
+          items:
+            $ref: '#/components/schemas/Event'
+        options:
+          $ref: '#/components/schemas/ProfileRequestOptions'
+    Location:
+      type: object
+      description: Geographic location resolved from the visitor's IP address.
+      properties:
+        lat:
+          type: number
+          format: double
+          description: Latitude coordinate.
+        lon:
+          type: number
+          format: double
+          description: Longitude coordinate.
+        city:
+          type: string
+          description: City name.
+        region:
+          type: string
+          description: Region or state code.
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        timezone:
+          type: string
+          description: IANA timezone identifier (e.g. "America/New_York").
     Profile:
       type: object
       description: A visitor profile containing identity, behavioral, and session data used for personalization.
@@ -365,84 +423,7 @@ components:
           additionalProperties:
             type: string
           description: Map of experience ID to variant index for sticky (consistent) assignment.
-    Change:
-      type: object
-      description: A content change to apply for a personalized experience, keyed by component.
-      properties:
-        key:
-          type: string
-          description: Identifier of the component or content slot to change.
-        type:
-          type: string
-          enum:
-          - Variable
-          description: Type of change (currently only "Variable" is supported).
-        value:
-          type: string
-          description: The variant entry ID to render for this component.
-        meta:
-          type: object
-          description: Metadata about the experience driving this change.
-          properties:
-            experienceId:
-              type: string
-              description: ID of the experience that produced this change.
-            variantIndex:
-              type: integer
-              description: Variant index assigned for this experience.
-    ProfileOnlyResponse:
-      type: object
-      description: Response envelope containing only the profile (no experiences or changes).
-      properties:
-        data:
-          $ref: '#/components/schemas/Profile'
-        error:
-          type: object
-          nullable: true
-        message:
-          type: string
-          example: ok
-    Experience:
-      type: object
-      description: A resolved experience with the variant the visitor should receive.
-      properties:
-        experienceId:
-          type: string
-          description: Unique identifier of the experience/experiment.
-        variantIndex:
-          type: integer
-          description: Zero-based index of the assigned variant (0 = control, 1+ = variants).
-        variants:
-          type: object
-          additionalProperties:
-            type: string
-          description: Map of component keys to variant entry IDs for this experience assignment.
-        sticky:
-          type: boolean
-          description: When true, the variant assignment is persisted for consistency.
   responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Profile not found
-            data: {}
-            error:
-              code: ERR_PROFILE_NOT_FOUND
-    InternalServerError:
-      description: An unexpected server error occurred.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Internal server error
-            data: {}
-            error:
-              code: ERR_INTERNAL_SERVER_ERROR
     TooManyRequests:
       description: Profile has exceeded the allowed number of concurrent requests.
       content:
@@ -454,6 +435,17 @@ components:
             data: {}
             error:
               code: ERR_PROFILE_OVERLOAD
+    InternalServerError:
+      description: An unexpected server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Internal server error
+            data: {}
+            error:
+              code: ERR_INTERNAL_SERVER_ERROR
     BadRequest:
       description: Invalid request data.
       content:
@@ -465,6 +457,17 @@ components:
             data: {}
             error:
               code: ERR_INVALID_DATA
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Profile not found
+            data: {}
+            error:
+              code: ERR_PROFILE_NOT_FOUND
   parameters:
     type:
       name: type
@@ -475,13 +478,6 @@ components:
         type: string
         enum:
         - preflight
-    profileId:
-      name: profileId
-      in: path
-      required: true
-      description: Unique identifier of the visitor profile.
-      schema:
-        type: string
     locale:
       name: locale
       in: query
@@ -491,3 +487,10 @@ components:
         type: string
         default: en
         example: en-US
+    profileId:
+      name: profileId
+      in: path
+      required: true
+      description: Unique identifier of the visitor profile.
+      schema:
+        type: string

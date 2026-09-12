@@ -11,6 +11,10 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "ninetailed-events-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "ninetailed-profiles-api-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
