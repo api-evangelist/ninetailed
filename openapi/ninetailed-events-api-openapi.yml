@@ -92,7 +92,53 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    InternalServerError:
+      description: An unexpected server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Internal server error
+            data: {}
+            error:
+              code: ERR_INTERNAL_SERVER_ERROR
+    TooManyRequests:
+      description: Profile has exceeded the allowed number of concurrent requests.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Profile overload
+            data: {}
+            error:
+              code: ERR_PROFILE_OVERLOAD
+    BadRequest:
+      description: Invalid request data.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            message: Invalid data provided
+            data: {}
+            error:
+              code: ERR_INVALID_DATA
   schemas:
+    BatchEventsRequest:
+      type: object
+      required:
+      - events
+      description: Request body for batch event ingestion. Maximum 200 events, 50 identify events, 50 unique profiles per request.
+      properties:
+        events:
+          type: array
+          maxItems: 200
+          description: Array of events to ingest across multiple profiles.
+          items:
+            $ref: '#/components/schemas/Event'
     Location:
       type: object
       description: Geographic location resolved from the visitor's IP address.
@@ -117,75 +163,6 @@ components:
         timezone:
           type: string
           description: IANA timezone identifier (e.g. "America/New_York").
-    AsyncConfirmation:
-      type: object
-      description: Confirmation that an asynchronous import request was accepted.
-      properties:
-        data:
-          type: object
-          description: Empty object; processing happens asynchronously.
-        error:
-          type:
-          - object
-          - 'null'
-        message:
-          type: string
-          example: ok
-    BatchEventsRequest:
-      type: object
-      required:
-      - events
-      description: Request body for batch event ingestion. Maximum 200 events, 50 identify events, 50 unique profiles per request.
-      properties:
-        events:
-          type: array
-          maxItems: 200
-          description: Array of events to ingest across multiple profiles.
-          items:
-            $ref: '#/components/schemas/Event'
-    BatchEventsResponse:
-      type: object
-      description: Response envelope for synchronous batch events, containing profile updates without experiences.
-      properties:
-        data:
-          type: array
-          description: Array of updated profiles.
-          items:
-            $ref: '#/components/schemas/Profile'
-        error:
-          type:
-          - object
-          - 'null'
-        message:
-          type: string
-          example: ok
-    ApiError:
-      type: object
-      description: Error response envelope.
-      required:
-      - message
-      - error
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        data:
-          type: object
-          description: Empty object on error.
-        error:
-          type: object
-          description: Structured error details.
-          properties:
-            code:
-              type: string
-              enum:
-              - ERR_INVALID_DATA
-              - ERR_CONFIG_NOT_FOUND
-              - ERR_PROFILE_NOT_FOUND
-              - ERR_NAMESPACE_MISMATCH
-              - ERR_PROFILE_OVERLOAD
-              - ERR_INTERNAL_SERVER_ERROR
-              description: Machine-readable error code.
     Event:
       type: object
       required:
@@ -237,6 +214,82 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp of when the event occurred.
+    AsyncConfirmation:
+      type: object
+      description: Confirmation that an asynchronous import request was accepted.
+      properties:
+        data:
+          type: object
+          description: Empty object; processing happens asynchronously.
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
+    BatchEventsResponse:
+      type: object
+      description: Response envelope for synchronous batch events, containing profile updates without experiences.
+      properties:
+        data:
+          type: array
+          description: Array of updated profiles.
+          items:
+            $ref: '#/components/schemas/Profile'
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
+    ApiError:
+      type: object
+      description: Error response envelope.
+      required:
+      - message
+      - error
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          description: Empty object on error.
+        error:
+          type: object
+          description: Structured error details.
+          properties:
+            code:
+              type: string
+              enum:
+              - ERR_INVALID_DATA
+              - ERR_CONFIG_NOT_FOUND
+              - ERR_PROFILE_NOT_FOUND
+              - ERR_NAMESPACE_MISMATCH
+              - ERR_PROFILE_OVERLOAD
+              - ERR_INTERNAL_SERVER_ERROR
+              description: Machine-readable error code.
+    Session:
+      type: object
+      description: Session-level metadata for the visitor.
+      properties:
+        id:
+          type: string
+          description: Unique session identifier.
+        isReturningVisitor:
+          type: boolean
+          description: True if the visitor has been seen in a previous session.
+        landingPage:
+          type: string
+          description: URL of the first page visited in this session.
+        count:
+          type: integer
+          description: Number of sessions this visitor has had.
+        sessionLength:
+          type: integer
+          description: Length of the current session in seconds.
     Profile:
       type: object
       description: A visitor profile containing identity, behavioral, and session data used for personalization.
@@ -274,59 +327,6 @@ components:
           additionalProperties:
             type: string
           description: Map of experience ID to variant index for sticky (consistent) assignment.
-    Session:
-      type: object
-      description: Session-level metadata for the visitor.
-      properties:
-        id:
-          type: string
-          description: Unique session identifier.
-        isReturningVisitor:
-          type: boolean
-          description: True if the visitor has been seen in a previous session.
-        landingPage:
-          type: string
-          description: URL of the first page visited in this session.
-        count:
-          type: integer
-          description: Number of sessions this visitor has had.
-        sessionLength:
-          type: integer
-          description: Length of the current session in seconds.
-  responses:
-    TooManyRequests:
-      description: Profile has exceeded the allowed number of concurrent requests.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Profile overload
-            data: {}
-            error:
-              code: ERR_PROFILE_OVERLOAD
-    InternalServerError:
-      description: An unexpected server error occurred.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Internal server error
-            data: {}
-            error:
-              code: ERR_INTERNAL_SERVER_ERROR
-    BadRequest:
-      description: Invalid request data.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-          example:
-            message: Invalid data provided
-            data: {}
-            error:
-              code: ERR_INVALID_DATA
   parameters:
     locale:
       name: locale
