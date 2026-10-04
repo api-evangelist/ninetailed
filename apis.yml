@@ -44,7 +44,6 @@ tags:
   - A/B Testing
   - Audience Segmentation
   - Feature Flags
-  - Headless CMS
   - Edge Computing
   - Content Management
 
@@ -76,6 +75,9 @@ apis:
   - type: Documentation
     url: https://www.contentful.com/developers/docs/ninetailed/experience-api/
 common:
+  - type: CapabilityMap
+    url: capabilities/ninetailed-capability-edges.yml
+    name: Ninetailed Business Capability Map
   - type: AgenticAccess
     url: agentic-access/ninetailed-agentic-access.yml
   - type: TrustCenter
@@ -114,3 +116,5 @@ maintainers:
     email: kin@apievangelist.com
 x-parent: contentful
 x-relationship: product
+x-tags-removed:
+- Headless CMS
