@@ -93,52 +93,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    Session:
-      type: object
-      description: Session-level metadata for the visitor.
-      properties:
-        id:
-          type: string
-          description: Unique session identifier.
-        isReturningVisitor:
-          type: boolean
-          description: True if the visitor has been seen in a previous session.
-        landingPage:
-          type: string
-          description: URL of the first page visited in this session.
-        count:
-          type: integer
-          description: Number of sessions this visitor has had.
-        sessionLength:
-          type: integer
-          description: Length of the current session in seconds.
-    ApiError:
-      type: object
-      description: Error response envelope.
-      required:
-      - message
-      - error
-      properties:
-        message:
-          type: string
-          description: Human-readable error message.
-        data:
-          type: object
-          description: Empty object on error.
-        error:
-          type: object
-          description: Structured error details.
-          properties:
-            code:
-              type: string
-              enum:
-              - ERR_INVALID_DATA
-              - ERR_CONFIG_NOT_FOUND
-              - ERR_PROFILE_NOT_FOUND
-              - ERR_NAMESPACE_MISMATCH
-              - ERR_PROFILE_OVERLOAD
-              - ERR_INTERNAL_SERVER_ERROR
-              description: Machine-readable error code.
     Profile:
       type: object
       description: A visitor profile containing identity, behavioral, and session data used for personalization.
@@ -188,36 +142,33 @@ components:
           description: Array of events to ingest across multiple profiles.
           items:
             $ref: '#/components/schemas/Event'
-    AsyncConfirmation:
+    ApiError:
       type: object
-      description: Confirmation that an asynchronous import request was accepted.
+      description: Error response envelope.
+      required:
+      - message
+      - error
       properties:
+        message:
+          type: string
+          description: Human-readable error message.
         data:
           type: object
-          description: Empty object; processing happens asynchronously.
+          description: Empty object on error.
         error:
-          type:
-          - object
-          - 'null'
-        message:
-          type: string
-          example: ok
-    BatchEventsResponse:
-      type: object
-      description: Response envelope for synchronous batch events, containing profile updates without experiences.
-      properties:
-        data:
-          type: array
-          description: Array of updated profiles.
-          items:
-            $ref: '#/components/schemas/Profile'
-        error:
-          type:
-          - object
-          - 'null'
-        message:
-          type: string
-          example: ok
+          type: object
+          description: Structured error details.
+          properties:
+            code:
+              type: string
+              enum:
+              - ERR_INVALID_DATA
+              - ERR_CONFIG_NOT_FOUND
+              - ERR_PROFILE_NOT_FOUND
+              - ERR_NAMESPACE_MISMATCH
+              - ERR_PROFILE_OVERLOAD
+              - ERR_INTERNAL_SERVER_ERROR
+              description: Machine-readable error code.
     Event:
       type: object
       required:
@@ -269,6 +220,25 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp of when the event occurred.
+    Session:
+      type: object
+      description: Session-level metadata for the visitor.
+      properties:
+        id:
+          type: string
+          description: Unique session identifier.
+        isReturningVisitor:
+          type: boolean
+          description: True if the visitor has been seen in a previous session.
+        landingPage:
+          type: string
+          description: URL of the first page visited in this session.
+        count:
+          type: integer
+          description: Number of sessions this visitor has had.
+        sessionLength:
+          type: integer
+          description: Length of the current session in seconds.
     Location:
       type: object
       description: Geographic location resolved from the visitor's IP address.
@@ -293,6 +263,36 @@ components:
         timezone:
           type: string
           description: IANA timezone identifier (e.g. "America/New_York").
+    AsyncConfirmation:
+      type: object
+      description: Confirmation that an asynchronous import request was accepted.
+      properties:
+        data:
+          type: object
+          description: Empty object; processing happens asynchronously.
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
+    BatchEventsResponse:
+      type: object
+      description: Response envelope for synchronous batch events, containing profile updates without experiences.
+      properties:
+        data:
+          type: array
+          description: Array of updated profiles.
+          items:
+            $ref: '#/components/schemas/Profile'
+        error:
+          type:
+          - object
+          - 'null'
+        message:
+          type: string
+          example: ok
   responses:
     InternalServerError:
       description: An unexpected server error occurred.
