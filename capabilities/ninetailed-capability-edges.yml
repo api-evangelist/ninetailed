@@ -1,0 +1,27 @@
+slug: ninetailed
+provider: Ninetailed
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Profiles
+  spec_file: ninetailed-profiles-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.7
+  evidence: POST /profiles createProfile Create Profile; "Returns visitor profiles and resolves which
+    experience and variant to render based on audience rules"
+  reason: Operations are CRUD over visitor profiles used for audience segmentation and personalization
+    delivery — closest honest fit is customer/visitor data management under CRM. Some pull toward BC-4280
+    telemetry/experimentation, but this tag is specifically the profile record store, so customer data
+    management is chosen with moderate confidence.
