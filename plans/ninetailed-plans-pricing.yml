@@ -72,3 +72,28 @@ notes: >-
   Personalization license through the Contentful Apps Marketplace.
   Ninetailed was acquired by Contentful in 2023; Contentful itself announced
   a definitive agreement to be acquired by Salesforce in January 2025.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Start
+    access: paid
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Core
+    access: paid
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Scale
+    access: paid
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
