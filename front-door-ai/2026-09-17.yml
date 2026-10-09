@@ -7,13 +7,17 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.contentful.com
   final_host: www.contentful.com
-  ownership: unresolved
-  owner: null
+  ownership: shared
+  owner: contentful
   shares_host_with:
+  - contentful
   - contentful-images
   inherited_from: null
+  alias_of: null
   verdict: unmeasured
   score: null
+  band: null
+  band_label: null
   host_score: null
   density: null
   words: null
