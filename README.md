@@ -64,61 +64,156 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ninetailed (now known as Contentful Personalization) is an API-first personalization and experimentation platform for content-rich applications. Acquired by Contentful in 2023, it provides digital teams with tools to define audience segments, run A/B tests, and deliver personalized experiences at the edge without requiring deep developer involvement for each campaign.
+Ninetailed (now Contentful Personalization) is an API-first personalization and experimentation platform for content-rich applications. It provides a REST-based Experience API for managing visitor profiles, defining audience segments, running A/B tests, and delivering personalized experiences at the edge. SDKs are available for JavaScript, React, Next.js, Node.js, and React Native.
 
-## APIs
+**Areas:** Personalization · Experimentation · A/B Testing · Audience Segmentation · Feature Flags · Edge Computing · Content Management
 
-### Experience API
+## Ninetailed on APIs.io
 
-The core REST API deployed on Cloudflare Workers for edge performance. It manages visitor profiles and resolves which experience variant to serve based on configured audience rules.
+Everything profiled for Ninetailed is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ninetailed/](https://apis.io/providers/ninetailed/)** — or go straight to one of the APIs or properties below.
 
-Base URL: `https://experience.ninetailed.co/v2/organizations/{organizationId}/environments/{environmentSlug}`
+### APIs (2)
 
-Key endpoints:
-- `POST /profiles` — Create a new visitor profile with events
-- `POST /profiles/{profileId}` — Update an existing profile
-- `GET /profiles/{profileId}` — Retrieve a visitor profile
-- `DELETE /profiles/{profileId}` — Remove a profile
-- `POST /events` — Batch upsert profiles (synchronous, max 200 events)
-- `POST /import/events` — Batch upsert profiles (asynchronous)
+- [Ninetailed Events API](https://apis.io/apis/ninetailed/ninetailed-events-api/) — Batch event ingestion endpoints for profile enrichment.
+- [Ninetailed Profiles API](https://apis.io/apis/ninetailed/ninetailed-profiles-api/) — Operations for creating, reading, updating, and deleting visitor profiles.
 
-## Authentication
+### Published properties
 
-Authentication uses a **Client ID** found under the SDK Keys section on the Optimization tab within your Contentful account.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## SDKs
+#### Agentic access (1)
 
-- JavaScript SDK (`@ninetailed/experience.js`)
-- React SDK
-- Next.js SDK
-- Node.js SDK
-- React Native SDK (experimental)
-- Shared SDK (`@ninetailed/experience.js-shared`)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-GitHub organization: https://github.com/ninetailed-inc
+- [Ninetailed Agentic Access](https://apis.io/agentic-access/ninetailed/ninetailed-agentic-access/)
 
-## Rate Limits
+#### JSON Schema (3)
 
-- Maximum 200 events per batch request
-- Maximum 50 identify events per batch request
-- Maximum 50 unique profiles per batch request
-- HTTP 429 (`ERR_PROFILE_OVERLOAD`) returned on concurrent request overload
+The data models the API reads and writes.
 
-## Links
+- [NinetailedEvent](https://apis.io/schemas/ninetailed/ninetailed-event/)
+- [NinetailedExperience](https://apis.io/schemas/ninetailed/ninetailed-experience/)
+- [NinetailedProfile](https://apis.io/schemas/ninetailed/ninetailed-profile/)
 
-- Website: https://www.contentful.com/products/personalization/
-- Documentation: https://www.contentful.com/developers/docs/ninetailed/
-- Experience API: https://www.contentful.com/developers/docs/ninetailed/experience-api/
-- GitHub: https://github.com/ninetailed-inc
-- Status: https://ninetailedstatus.com/
-- Changelog: https://www.contentful.com/developers/docs/ninetailed/ninetailed-changelog/
-- LinkedIn: https://www.linkedin.com/company/ninetailed
-- X: https://x.com/ninetailedhq
+#### JSON-LD (1)
 
-## Pricing
+Linked-data contexts for the provider's vocabulary.
 
-Quote-based enterprise pricing, available as an add-on via the Contentful Apps Marketplace. Three tiers: Start, Core, and Scale. No free plan or self-serve signup. Contact Contentful sales for pricing.
+- [Ninetailed Context](https://apis.io/jsonld/ninetailed/ninetailed-context/)
 
-## Notes
+#### Vocabulary (1)
 
-Ninetailed was founded in Germany and acquired by Contentful in 2023. Contentful announced a definitive agreement to be acquired by Salesforce in January 2025.
+The provider's domain terms, defined.
+
+- [Ninetailed Vocabulary](https://apis.io/vocabularies/ninetailed/ninetailed-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Batch Events Sync](https://apis.io/examples/ninetailed/batch-events-sync/)
+- [Create Profile](https://apis.io/examples/ninetailed/create-profile/)
+- [Update Profile Identify](https://apis.io/examples/ninetailed/update-profile-identify/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [Ninetailed Experience Events API](https://apis.io/collections/ninetailed/open-ninetailed-events-api/)
+- [Ninetailed Experience Events Profiles API](https://apis.io/collections/ninetailed/open-ninetailed-profiles-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Ninetailed — jsonschema rules](https://apis.io/rules/ninetailed/ninetailed-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ninetailed Domain Security](https://apis.io/security/ninetailed/ninetailed-domain-security/)
+- [Ninetailed Trust Center](https://apis.io/security/ninetailed/ninetailed-trust-center/)
+- [Ninetailed Vulnerability Disclosure](https://apis.io/security/ninetailed/ninetailed-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ninetailed Plans Pricing](https://apis.io/plans/ninetailed/ninetailed-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ninetailed Rate Limits](https://apis.io/rate-limits/ninetailed/ninetailed-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ninetailed Finops](https://apis.io/finops/ninetailed/ninetailed-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.contentful.com/products/personalization/)
+- [Documentation](https://www.contentful.com/developers/docs/ninetailed/)
+- [Pricing](https://www.contentful.com/pricing/)
+- [Changelog](https://www.contentful.com/developers/docs/ninetailed/ninetailed-changelog/)
+- [Blog](https://medium.com/@Ninetailed)
+- [Status](https://ninetailedstatus.com/)
+
+## API Evangelist rating
+
+**Kin Score 34.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 59.9 |
+| Contract governance | 9.8 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 7.1 |
+| Access clarity | 21.1 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ninetailed/](https://apis.io/providers/ninetailed/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ninetailed: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ninetailed/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
